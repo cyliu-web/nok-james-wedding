@@ -3,20 +3,32 @@ VERSION:2.0
 PRODID:-//Nok and James//Wedding Invitation//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
+X-WR-TIMEZONE:Asia/Bangkok
+BEGIN:VTIMEZONE
+TZID:Asia/Bangkok
+X-LIC-LOCATION:Asia/Bangkok
+BEGIN:STANDARD
+TZOFFSETFROM:+0700
+TZOFFSETTO:+0700
+TZNAME:ICT
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
 BEGIN:VEVENT
 UID:nok-james-wedding-20270117@invitation
 DTSTAMP:20261115T000000Z
-DTSTART:20270117T020900Z
-DTEND:20270117T063000Z
+DTSTART;TZID=Asia/Bangkok:20270117T090900
+DTEND;TZID=Asia/Bangkok:20270117T133000
 SUMMARY:Nok & James' Wedding
 LOCATION:เรือนไทยสาครพิพัฒน์ (Bananal
  eaf wedding cafe & resort)
-DESCRIPTION:9:09  Traditional Thai Wedding Procession (แห่ขัน
- หมาก และ พิธีหมั้น)\n10:29  Water Blessing
-  Ceremony (พิธีหลั่งน้ำพระพุทธมน
- ต์ประสาทพร)\n11:29  Wedding Luncheon (ร่วมร
- ับประทานอาหารกลางวัน)\n\nMap: http
- s://maps.app.goo.gl/YUaXc9CFNoDHLbCz5
+DESCRIPTION:All times are Bangkok time (GMT+7).\n\n9:09  Traditional Thai W
+ edding Procession (แห่ขันหมาก และ พิธี
+ หมั้น)\n10:29  Water Blessing Ceremony (พิธีหลั่
+ งน้ำพระพุทธมนต์ประสาทพร)\n11
+ :29  Wedding Luncheon (ร่วมรับประทานอาหา
+ รกลางวัน)\n\nMap: https://maps.app.goo.gl/YUaXc9CFNoDHLbCz
+ 5
 URL:https://maps.app.goo.gl/YUaXc9CFNoDHLbCz5
 BEGIN:VALARM
 TRIGGER:-P1D
