@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Nok and James//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:nok-james-wedding-20270117@invitation
+DTSTAMP:20261115T000000Z
+DTSTART:20270117T020900Z
+DTEND:20270117T063000Z
+SUMMARY:Nok & James' Wedding
+LOCATION:เรือนไทยสาครพิพัฒน์ (Bananal
+ eaf wedding cafe & resort)
+DESCRIPTION:9:09  Traditional Thai Wedding Procession (แห่ขัน
+ หมาก และ พิธีหมั้น)\n10:29  Water Blessing
+  Ceremony (พิธีหลั่งน้ำพระพุทธมน
+ ต์ประสาทพร)\n11:29  Wedding Luncheon (ร่วมร
+ ับประทานอาหารกลางวัน)\n\nMap: http
+ s://maps.app.goo.gl/YUaXc9CFNoDHLbCz5
+URL:https://maps.app.goo.gl/YUaXc9CFNoDHLbCz5
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Nok & James' Wedding is tomorrow
+END:VALARM
+END:VEVENT
+END:VCALENDAR
