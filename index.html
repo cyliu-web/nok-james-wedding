@@ -41,7 +41,7 @@ button{font:inherit;color:inherit}
 #scroller::-webkit-scrollbar{display:none}
 #scroller.open{overflow-y:auto}
 .page{position:relative;width:100%;height:100%;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always}
-.stage{position:absolute;left:50%;top:calc(50% - var(--barH,0px) / 2);width:810px;height:1440px;margin:-720px 0 0 -405px;transform:scale(var(--s));user-select:none;-webkit-user-select:none}
+.stage{position:absolute;left:50%;top:50%;width:810px;height:1440px;margin:-720px 0 0 -405px;transform:scale(var(--s));user-select:none;-webkit-user-select:none}
 .L{position:absolute;pointer-events:none}
 .A{position:absolute;inset:0}
 .A>img,.A>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -117,25 +117,6 @@ svg.A{width:100%;height:100%;overflow:visible}
 .gfqr{display:block;pointer-events:auto;cursor:zoom-in;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 18px 42px rgba(106,93,63,.22),0 0 0 1.5px rgba(184,150,62,.28)}
 .gf-hint{display:flex;align-items:center;justify-content:center;font-size:19px;letter-spacing:.02em;color:var(--ink);opacity:.74;white-space:nowrap;line-height:1}
 #sheet .when span{display:block;font-size:12px;opacity:.72;margin-top:3px}
-
-
-/* music bar (official Spotify embed) */
-#music{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));width:min(calc(100% - 24px),460px);height:80px;z-index:7;transform:translate(-50%,calc(100% + 40px));opacity:0;pointer-events:none;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .4s}
-#music.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
-#music .mframe{position:absolute;inset:0;border-radius:12px;overflow:hidden;background:#fffaf1;box-shadow:0 10px 30px rgba(60,50,30,.25)}
-#music .mph{position:absolute;inset:0;display:flex;align-items:center;gap:12px;padding:0 18px;color:var(--ink);text-decoration:none}
-#music .mph .ic{width:26px;height:26px;flex:none;fill:none;stroke:var(--gold);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-#music .mph b{display:block;font-weight:400;font-size:15px}
-#music .mph i{display:block;font-style:normal;font-size:12px;opacity:.7;margin-top:2px}
-#music iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-#music .mx{position:absolute;top:-11px;right:-7px;z-index:2;width:28px;height:28px;border-radius:50%;border:1px solid rgba(184,150,62,.55);background:#fffaf1;color:var(--ink);font-size:17px;line-height:25px;text-align:center;cursor:pointer;box-shadow:0 2px 8px rgba(60,50,30,.22)}
-#musicBtn{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:7;width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(184,150,62,.5);background:rgba(255,250,241,.94);box-shadow:0 6px 18px rgba(60,50,30,.2);display:none;align-items:center;justify-content:center;cursor:pointer}
-#musicBtn.show{display:flex}
-#musicBtn .ic{width:22px;height:22px;fill:none;stroke:var(--gold);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-#sab{position:fixed;left:0;bottom:0;width:0;height:0;padding-bottom:env(safe-area-inset-bottom);visibility:hidden;pointer-events:none}
-.refit .stage{transition:transform .7s cubic-bezier(.2,.8,.2,1),top .7s cubic-bezier(.2,.8,.2,1)}
-.music-on #toast{bottom:calc(112px + env(safe-area-inset-bottom))}
-.capture #music,.capture #musicBtn{display:none!important}
 
 /* chrome */
 #fx{position:fixed;left:0;top:0;z-index:5;pointer-events:none}
@@ -258,9 +239,6 @@ svg.A{width:100%;height:100%;overflow:visible}
 </div></section>
 </main>
 <canvas id="fx" aria-hidden="true"></canvas>
-<div id="music" role="region" aria-label="Music player"><div class="mframe"><a class="mph" href="https://open.spotify.com/track/0T5iIrXA4p5GsubkhuBIKV" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg><span><b>Until I Found You</b><i>Stephen Sanchez · Spotify</i></span></a></div><button class="mx" type="button" aria-label="Hide music player">×</button></div>
-<button id="musicBtn" type="button" aria-label="Show music player"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg></button>
-<div id="sab" aria-hidden="true"></div>
 <nav id="dots" aria-label="Pages"><button type="button" class="active" aria-label="Cover"></button><button type="button" aria-label="Venue"></button><button type="button" aria-label="Invitation"></button><button type="button" aria-label="Dress code"></button><button type="button" aria-label="Menu"></button><button type="button" aria-label="Wedding gift"></button></nav>
 <div id="sheet" hidden>
   <div class="sheet-bg" data-close></div>
@@ -310,19 +288,12 @@ svg.A{width:100%;height:100%;overflow:visible}
   var pages = $$('.page');
   var pageIndex = 0;
   var opened = false;
-  var musicOn = false;
 
   /* ---------------------------------------------------------------- stage fit */
   function fit() {
     var w = scroller.clientWidth, h = scroller.clientHeight;
-    var barH = 0;
-    if (musicOn) {
-      var sab = parseFloat(getComputedStyle(document.getElementById('sab')).paddingBottom) || 0;
-      barH = 80 + 10 + sab + 10;
-    }
-    var s = Math.min(w / 810, (h - barH) / 1440);
+    var s = Math.min(w / 810, h / 1440);
     document.documentElement.style.setProperty('--s', s.toFixed(5));
-    document.documentElement.style.setProperty('--barH', barH + 'px');
     sizeFx();
     if (opened && !CAPTURE) scroller.scrollTop = pageIndex * h;
   }
@@ -538,7 +509,6 @@ svg.A{width:100%;height:100%;overflow:visible}
     tl.call(unlock, null, 3.0);
     tl.add(rise(A('hint'), { y: 14 }).duration(.7), 5.1);
     tl.add(hintLoop, 5.8);
-    tl.call(showMusic, null, 4.7);
     if (REDUCED) tl.timeScale(3);
     return tl;
   }
@@ -686,40 +656,6 @@ svg.A{width:100%;height:100%;overflow:visible}
     prepQR();
   }
 
-  /* ---------------------------------------------------------------- music bar (official Spotify embed) */
-  var SPOTIFY = 'https://open.spotify.com/embed/track/0T5iIrXA4p5GsubkhuBIKV?utm_source=generator';
-  function refit() {
-    var root = document.documentElement;
-    root.classList.add('refit'); fit();
-    clearTimeout(refit._t); refit._t = setTimeout(function () { root.classList.remove('refit'); }, 800);
-  }
-  function showMusic() {
-    if (CAPTURE || musicOn) return;
-    musicOn = true;
-    var m = $('#music'), f = $('.mframe', m);
-    if (!$('iframe', f)) {
-      var ifr = document.createElement('iframe');
-      ifr.src = SPOTIFY;
-      ifr.title = 'Spotify player: Until I Found You by Stephen Sanchez';
-      ifr.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture');
-      ifr.setAttribute('frameborder', '0');
-      f.appendChild(ifr);
-    }
-    m.classList.add('show');
-    $('#musicBtn').classList.remove('show');
-    document.documentElement.classList.add('music-on');
-    refit();
-  }
-  function hideMusic() {
-    musicOn = false;
-    var m = $('#music'), ifr = $('iframe', m);
-    m.classList.remove('show');
-    if (ifr) ifr.parentNode.removeChild(ifr);          /* removing the player stops playback */
-    $('#musicBtn').classList.add('show');
-    document.documentElement.classList.remove('music-on');
-    refit();
-  }
-
   /* ---------------------------------------------------------------- wiring */
   function init() {
     fit();
@@ -735,8 +671,6 @@ svg.A{width:100%;height:100%;overflow:visible}
     if (IG) $('.ig-note', sheet).hidden = false;
     $('#btnShare .btn').addEventListener('click', shareLink);
     $('#btnSaveQR .btn').addEventListener('click', saveQR);
-    $('#music .mx').addEventListener('click', hideMusic);
-    $('#musicBtn').addEventListener('click', showMusic);
     $$('.swb').forEach(function (b) {
       b.addEventListener('click', function () {
         gsap.fromTo(b, { scale: 1 }, { scale: 1.14, duration: .14, yoyo: true, repeat: 1, ease: 'power1.out', overwrite: 'auto' });
